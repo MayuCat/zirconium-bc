@@ -10,8 +10,9 @@ set -ouex pipefail
 # https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/43/x86_64/repoview/index.html&protocol=https&redirect=1
 
 # this installs a package from fedora repos
-
-dnf5 -y install --enable-repo="*rpmfusion*" broadcom-wl
+dnf5 config-manager setopt rpmfusion-nonfree.enabled=1
+dnf5 -y install broadcom-wl
+dnf5 config-manager setopt rpmfusion-nonfree.enabled=0
 
 # Use a COPR Example:
 #
