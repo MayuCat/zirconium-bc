@@ -26,8 +26,9 @@ FROM ghcr.io/zirconium-dev/zirconium:latest
 # RUN rm /opt && mkdir /opt
 
 # broadcom-wl akmod
-RUN dnf5 -y copr enable ublue-os/akmods
-COPY --from=ghcr.io/ublue-os/akmods:main-43-x86_64 / /tmp/akmods-common
+RUN sed -i 's@enabled=0@enabled=1@g' /etc/yum.repos.d/_copr_ublue-os-akmods.repo
+
+COPY --from=ghcr.io/ublue-os/akmods:main-43-6.18.4-200.fc43.x86_64 / /tmp/akmods-common
 RUN find /tmp/akmods-common
 ## optionally install remove old and install new kernel
 # dnf -y remove --no-autoremove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra
