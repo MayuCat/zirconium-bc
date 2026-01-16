@@ -12,17 +12,12 @@ set -ouex pipefail
 # this installs a package from fedora repos
 
 # broadcom-wl akmod
-dnf5 -y copr enable ublue-os/akmods
+dnf5 -y install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+dnf5 -y install broadcom-wl
+dnf5 config-manager setopt "*rpmfusion*".enabled=0
 
-dnf5 -y install \
-    https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-"$(rpm -E %fedora)".noarch.rpm \
-    https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm
-
-dnf5 -y install /tmp/akmods-common/rpms/ublue-os/ublue-os-akmods*.rpm
-dnf5 -y install /tmp/akmods-common/rpms/kmods/kmod-wl*.rpm
-
-dnf5 -y remove rpmfusion-free-release rpmfusion-nonfree-release
-dnf5 -y copr disable ublue-os/akmods
+rm -f /etc/modprobe.d/broadcom-wl-blacklist.conf
+rm -f /etc/modprobe.d/default-disable-broadcom-wl.conf
 
 # Use a COPR Example:
 #

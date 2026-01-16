@@ -23,9 +23,6 @@ FROM ghcr.io/zirconium-dev/zirconium:latest
 ## Uncomment the following line if one desires to make /opt immutable and be able to be used
 ## by the package manager.
 
-COPY --from=ghcr.io/ublue-os/akmods:main-43-6.18.4-200.fc43.x86_64 / /tmp/akmods-common
-RUN find /tmp/akmods-common
-
 # RUN rm /opt && mkdir /opt
 
 ### MODIFICATIONS
