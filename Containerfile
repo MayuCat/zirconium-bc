@@ -25,18 +25,6 @@ FROM ghcr.io/zirconium-dev/zirconium:latest
 
 # RUN rm /opt && mkdir /opt
 
-# broadcom-wl akmod
-RUN sed -i 's@enabled=0@enabled=1@g' /etc/yum.repos.d/_copr_ublue-os-akmods.repo
-
-COPY --from=ghcr.io/ublue-os/akmods:main-43-6.18.4-200.fc43.x86_64 / /tmp/akmods-common
-RUN find /tmp/akmods-common
-## optionally install remove old and install new kernel
-# dnf -y remove --no-autoremove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra
-## install ublue support package and desired kmod(s)
-RUN dnf5 -y install /tmp/akmods-common/rpms/ublue-os/ublue-os-akmods*.rpm
-RUN dnf5 -y install /tmp/akmods-common/rpms/kmods/kmod-wl*.rpm
-RUN dnf5 -y copr disable ublue-os/akmods
-
 ### MODIFICATIONS
 ## make modifications desired in your image and install packages by modifying the build.sh script
 ## the following RUN directive does all the things required to run "build.sh" as recommended.
