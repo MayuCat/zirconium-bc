@@ -31,8 +31,8 @@ RUN find /tmp/akmods-common
 ## optionally install remove old and install new kernel
 # dnf -y remove --no-autoremove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra
 ## install ublue support package and desired kmod(s)
-RUN dnf install /tmp/akmods-common/rpms/ublue-os/ublue-os-akmods*.rpm
-RUN dnf install /tmp/akmods-common/rpms/kmods/kmod-wl*.rpm
+RUN dnf5 -y install /tmp/akmods-common/rpms/ublue-os/ublue-os-akmods*.rpm
+RUN dnf5 -y install /tmp/akmods-common/rpms/kmods/kmod-wl*.rpm
 
 
 
