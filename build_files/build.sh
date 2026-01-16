@@ -11,24 +11,18 @@ set -ouex pipefail
 
 # this installs a package from fedora repos
 
-
 # broadcom-wl akmod
-# Fetch Common AKMODS & Kernel RPMS -- Taken from Bluefin
-skopeo copy --retry-times 3 docker://ghcr.io/ublue-os/akmods:"${AKMODS_FLAVOR}"-"$(rpm -E %fedora)"-"${KERNEL}" dir:/tmp/akmods
-AKMODS_TARGZ=$(jq -r '.layers[].digest' </tmp/akmods/manifest.json | cut -d : -f 2)
-tar -xvzf /tmp/akmods/"$AKMODS_TARGZ" -C /tmp/
-mv /tmp/rpms/* /tmp/akmods/
-# NOTE: kernel-rpms should auto-extract into correct location
 dnf5 -y copr enable ublue-os/akmods
-# Install RPMFUSION Dependent AKMODS -- Bluefin again
+
 dnf5 -y install \
     https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-"$(rpm -E %fedora)".noarch.rpm \
     https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm
-dnf5 -y install \
-    /tmp/akmods/kmods/*kmod-wl*.rpm
+
+dnf5 -y install /tmp/akmods-common/rpms/ublue-os/ublue-os-akmods*.rpm
+dnf5 -y install /tmp/akmods-common/rpms/kmods/kmod-wl*.rpm
 
 dnf5 -y remove rpmfusion-free-release rpmfusion-nonfree-release
-
+dnf5 -y copr disable ublue-os/akmods
 
 # Use a COPR Example:
 #
