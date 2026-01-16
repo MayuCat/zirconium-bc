@@ -12,8 +12,6 @@ set -ouex pipefail
 # this installs a package from fedora repos
 
 # broadcom-wl
-dnf5 -y install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
-dnf5 -y install broadcom-wl
 
 # Use a COPR Example:
 #
